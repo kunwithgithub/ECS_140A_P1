@@ -10,7 +10,7 @@ public class Parser extends Object{
    private Chario chario;
    private Scanner scanner;
    private Token token;
-
+   private SymbolTable table;
    private Set<Integer> addingOperator,
                         multiplyingOperator,
                         relationalOperator,
@@ -131,8 +131,8 @@ public class Parser extends Object{
    /*
    subprogramSpecification = "procedure" identifier [ formalPart ]
    */
-    private void subptogramSpecification() {
-    	accept(Token.RPOC, "'procedure' expected");
+    private void subprogramSpecification() {
+    	accept(Token.PROC, "'procedure' expected");
     	
     	//identifier?
     	/*
@@ -162,7 +162,7 @@ public class Parser extends Object{
 		   //token = scanner.nextToken();
 		   parameterSpecification(); 
 	   }
-	   accept(Token.R.PAR, "')' expected");
+	   accept(Token.R_PAR, "')' expected");
    }
    /*
    
@@ -178,6 +178,19 @@ public class Parser extends Object{
 	   mode();
 	   name();
    }
+   
+   private void mode(){
+	   if(token.code == Token.IN){
+		   accept(Token.IN,"'in' expected");
+		   if(token.code == Token.OUT){
+			   accept(Token.OUT,"'out' expected");
+		   }
+	   }else if(token.code == Token.OUT){
+		   accept(Token.OUT,"'out' expected");
+	   }
+	   
+   }
+   
    
    
    
@@ -407,7 +420,7 @@ public class Parser extends Object{
    */
      private void nullStatement() {
     	 accept(Token.NULL, "'null' expected");
-    	 accept(oken.SEMI, "';' expected");
+    	 accept(Token.SEMI, "';' expected");
      }
    /*
    loopStatement =
@@ -506,6 +519,11 @@ public class Parser extends Object{
       }
       
       accept(Token.SEMI, "semicolon expected");
+   }
+   
+   private void actualParameterPart(){
+	   
+	   
    }
 
    /*
