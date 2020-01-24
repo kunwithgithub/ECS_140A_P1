@@ -354,7 +354,12 @@ public class Parser extends Object{
    /*
    identifier { "," identifer }
    */
-      private void ide
+      private void identifierList() {
+    	  while(token.code == Token.COMMA)
+    	  {
+    		  accept(Token.ID, "identifier expected");
+    	  }
+      }
    /*
   
    
@@ -634,3 +639,4 @@ public class Parser extends Object{
    }
 
 }
+
