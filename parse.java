@@ -87,7 +87,7 @@ public class Parser extends Object{
       if (token.code == Token.ID)
          entry = table.enterSymbol(token.string);
       else
-         fatalError("identifier expected");
+         fatalError("identifier expected 5");
       token = scanner.nextToken();
       return entry;
    }
@@ -97,7 +97,7 @@ public class Parser extends Object{
       if (token.code == Token.ID)
          entry = table.findSymbol(token.string);
       else
-         fatalError("identifier expected");
+         fatalError("identifier expected 6");
       token = scanner.nextToken();
       return entry;
    }
@@ -142,7 +142,7 @@ public class Parser extends Object{
     	}
     	*/
     	
-    	accept(Token.ID, "identifier expected");
+    	accept(Token.ID, "identifier expected 1");
     	
     	if(token.code == Token.L_PAR)
     	{
@@ -156,12 +156,15 @@ public class Parser extends Object{
    private void formalPart() {
 	   accept(Token.L_PAR, "'(' expected");
 	   parameterSpecification();
+	   
 	   while(token.code == Token.SEMI)
 	   {   
 		   //?????
-		   //token = scanner.nextToken();
+		   token = scanner.nextToken();
 		   parameterSpecification(); 
 	   }
+	   
+	   //token = scanner.nextToken();
 	   accept(Token.R_PAR, "')' expected");
    }
    /*
@@ -172,7 +175,8 @@ public class Parser extends Object{
    private void parameterSpecification()
    {
 	   identifierList();
-	   accept(Token.COLON, "':' expected");
+	   
+	   accept(Token.COLON, "':' expected 1" + token.code);
 	  
 	   //need make sure
 	   mode();
@@ -191,21 +195,14 @@ public class Parser extends Object{
 			   //accept(Token.OUT,"'out' expected");
 			   token = scanner.nextToken();
 		   }
-		   
-		   else {
-			   fatalError("error in mode part");
-		   }
+
 	   }
 	   
 	   else if(token.code == Token.OUT){
 		   accept(Token.OUT,"'out' expected");
 	   }
 	   
-	   else if(token.code >= 0 && token.code <= 46 && token.code != Token.IN && token.code != Token.OUT )
-	   {
-		   
-		   fatalError("error in mode part");
-	   }
+	 
 	   
 	   
 	   
@@ -251,7 +248,7 @@ public class Parser extends Object{
    */
    private void numberOrObjectDeclaration(){
       identifierList();
-      accept(Token.COLON, "':' expected");
+      accept(Token.COLON, "':' expected 2");
       if (token.code == Token.CONST){
          token = scanner.nextToken();
          accept(Token.GETS, "':=' expected");
@@ -276,7 +273,7 @@ public class Parser extends Object{
    	  }
    	  */
 	   
-	   accept(Token.ID, "identifier expected");
+	   accept(Token.ID, "identifier expected 2");
 	   
 	   accept(Token.IS, "'is' expected");
 	   
@@ -385,13 +382,20 @@ public class Parser extends Object{
         	
         }
    /*
-   identifier { "," identifer }
+   identifier = { "," identifer }
    */
       private void identifierList() {
-    	  while(token.code == Token.COMMA)
-    	  {
-    		  accept(Token.ID, "identifier expected");
+    	  System.out.print("before: "+token.code);
+    	  if(token.code == Token.COMMA) {
+    		  while(token.code == Token.COMMA)
+    	  		{   
+    			  token = scanner.nextToken();
+    			  accept(Token.ID, "identifier expected 3");
+    	  	}
+    	  }else {
+    	  token = scanner.nextToken();
     	  }
+    	  System.out.print("after: "+token.code);
       }
    /*
   
@@ -636,11 +640,13 @@ public class Parser extends Object{
     		  token = scanner.nextToken();
     		  primary(); 
     	    }
-    		 
+    		
+    		 /*
     		 else if(token.code <= 46 && token.code >= 0 && token.code != Token.EXPO )
     		 {
-    			 fatalError("error in factor");
+    			 fatalError("error in factor1");
     		 }
+    		 */
     	 }
     	  
     	  
@@ -652,7 +658,7 @@ public class Parser extends Object{
     	  
     	  else
     	  {
-    		  fatalError("error in factor");
+    		  fatalError("error in factor2");
     	  }
       }
 
@@ -683,7 +689,7 @@ public class Parser extends Object{
    name = identifier [ indexedComponent ]
    */
    private void name(){
-      accept(Token.ID, "identifier expected");
+      accept(Token.ID, "identifier expected 4");
       if (token.code == Token.L_PAR)
          indexedComponent();
    }
