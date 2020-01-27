@@ -165,7 +165,7 @@ public class Parser extends Object{
 	   }
 	   
 	   //token = scanner.nextToken();
-	   accept(Token.R_PAR, "')' expected");
+	   accept(Token.R_PAR, "')' expected3");
    }
    /*
    
@@ -248,7 +248,7 @@ public class Parser extends Object{
    */
    private void numberOrObjectDeclaration(){
       identifierList();
-      accept(Token.COLON, "':' expected 2");
+      accept(Token.COLON, "':' expected 2 "+ token.code);
       if (token.code == Token.CONST){
          token = scanner.nextToken();
          accept(Token.GETS, "':=' expected");
@@ -322,7 +322,7 @@ public class Parser extends Object{
        private void enumerationTypeDefinition() {
     	   accept(Token.L_PAR, "'(' expected");
     	   identifierList();
-    	   accept(Token.R_PAR, "')' expected");
+    	   accept(Token.R_PAR, "')' expected4");
     	   
        }
    /*
@@ -340,7 +340,7 @@ public class Parser extends Object{
     	   index();
         }
        
-        accept(Token.R_PAR, "')' expected");
+        accept(Token.R_PAR, "')' expected5");
         accept(Token.OF, "'of' expected");
         name();
        }
@@ -382,19 +382,26 @@ public class Parser extends Object{
         	
         }
    /*
-   identifier = { "," identifer }
+  identifierList =  identifier { "," identifer }
    */
       private void identifierList() {
     	  System.out.print("before: "+token.code);
+    	
+    	  accept(Token.ID, "identifier expected 3");
+    	 
     	  if(token.code == Token.COMMA) {
     		  while(token.code == Token.COMMA)
     	  		{   
     			  token = scanner.nextToken();
     			  accept(Token.ID, "identifier expected 3");
     	  	}
-    	  }else {
+    	  }
+    	  
+    	  /*
+    	  else {
     	  token = scanner.nextToken();
     	  }
+    	  */
     	  System.out.print("after: "+token.code);
       }
    /*
@@ -558,7 +565,7 @@ public class Parser extends Object{
 		   expression();
 	   }
 	   
-	   accept(Token.R_PAR, "')' expected");
+	   accept(Token.R_PAR, "')' expected6");
 	   
    }
 
@@ -679,7 +686,7 @@ public class Parser extends Object{
          case Token.L_PAR:
             token = scanner.nextToken();
             expression();
-            accept(Token.R_PAR, "')' expected");
+            accept(Token.R_PAR, "')' expected1");
             break;
          default: fatalError("error in primary");
       }
@@ -708,7 +715,7 @@ public class Parser extends Object{
 		   expression();
 	   }
 	   
-	   accept(Token.R_PAR, "')' expected");
+	   accept(Token.R_PAR, "')' expected2 " + token.code);
    }
 
 }
