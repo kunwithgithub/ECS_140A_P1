@@ -125,7 +125,7 @@ public class Parser extends Object{
       accept(Token.END, "'end' expected");
       if (token.code == Token.ID)
          token = scanner.nextToken();
-      accept(Token.SEMI, "semicolon expected");
+      accept(Token.SEMI, "semicolon expected1");
    }
 
    /*
@@ -249,14 +249,18 @@ public class Parser extends Object{
    private void numberOrObjectDeclaration(){
       identifierList();
       accept(Token.COLON, "':' expected 2 "+ token.code);
+     
       if (token.code == Token.CONST){
          token = scanner.nextToken();
          accept(Token.GETS, "':=' expected");
+       //  System.out.print("in num or obj: " + token.code);
          expression();
       }
       else
          typeDefinition();
-      accept(Token.SEMI, "semicolon expected");
+      
+     
+      accept(Token.SEMI, "semicolon expected2 " + token.code);
    }
 
    /*
@@ -531,7 +535,7 @@ public class Parser extends Object{
    /*
    assignmentStatement = <variable>name ":=" expression ";"
 
-   procedureCallStatement = <procedure>name [ actualParameterPart ] ";"
+   procedureCallStatement = <procedure>name  ";"
    */
    private void assignmentOrCallStatement(){
       name();
@@ -541,7 +545,7 @@ public class Parser extends Object{
          expression();
       }
       
-      //??
+      /*
       else {
     	  if(token.code == Token.L_PAR)
     	  {
@@ -549,8 +553,9 @@ public class Parser extends Object{
     	    actualParameterPart();
     	  }
       }
+      */
       
-      accept(Token.SEMI, "semicolon expected");
+      accept(Token.SEMI, "semicolon expected3");
    }
    
    
@@ -577,20 +582,27 @@ public class Parser extends Object{
    }
 
    /*
-   expression = relation { "and" relation } | { "or" relation }
+   expression = relation [{ "and" relation } | { "or" relation }]
    */
-   private void expression(){
+   private void expression() {
       relation();
       if (token.code == Token.AND)
+      {
          while (token.code == Token.AND){
             token = scanner.nextToken();
             relation();
          }
+         
+      }
+     
       else if (token.code == Token.OR)
+      {
          while (token.code == Token.OR){
             token = scanner.nextToken();
             relation();
          }
+      }
+      
    }
 
    /*
