@@ -1,8 +1,3 @@
-/*
-You can test Chario, Scanner, or Parser separately by adding and removing comments
-in the last few lines of the TerminalApp constructor.
-*/
-
 import java.io.*;
 
 public class TerminalApp{
