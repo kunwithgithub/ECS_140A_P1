@@ -196,19 +196,35 @@ public class Parser extends Object{
 	   accept(Token.R_PAR, "')' expected3");
    }
    /*
-   parameterSpecification = identifierList ":" mode <type>name
+   parameterSpecification = identifierList ":" mode <type>identifer
    */
    private void parameterSpecification(){
 	  
       SymbolEntry list = identifierList();
 	  list.setRole(SymbolEntry.PARAM);
       accept(Token.COLON, "':' expected");
-      if (token.code == Token.IN)
-         token = scanner.nextToken();
-      if (token.code == Token.OUT)
-         token = scanner.nextToken();
+	  mode();
       SymbolEntry entry = findId();
 	  acceptRole(entry,SymbolEntry.TYPE,"must be a type name");
+   }
+   
+
+// mode = ["in"] | "in" "out" | "out"
+   private void mode(){
+	   if(token.code == Token.IN){
+		   accept(Token.IN,"'in' expected");
+		   
+		   if(token.code == Token.OUT){
+			  accept(Token.OUT,"'out' expected");
+		   }
+
+	   }
+	   
+	   else if(token.code == Token.OUT){
+		   accept(Token.OUT,"'out' expected");
+	   }   
+	   
+	   
    }
 
    /*
@@ -279,6 +295,7 @@ public class Parser extends Object{
    /*
    typeDefinition = enumerationTypeDefinition | arrayTypeDefinition
                   | range | <type>identifer
+				  
    */
      private void typeDefinition() {
     	
@@ -320,7 +337,7 @@ public class Parser extends Object{
    }
 
    /*
-   arrayTypeDefinition = "array" "(" index ")" "of" <type>name
+	arrayTypeDefinition = "array" "(" index { "," index } ")" "of" <type>identifier
    */
        private void arrayTypeDefinition() {
        
@@ -340,14 +357,14 @@ public class Parser extends Object{
 		acceptRole(entry,SymbolEntry.TYPE,"type name expected");
        }
    /*
-   index = range | <type>name
+  index = range | <type>identifier
    */
    private void index(){
 	  
       if (token.code == Token.RANGE)
          range();
       else if (token.code == Token.ID){
-         SymbolEntry entry = name();
+         SymbolEntry entry = findId();
          acceptRole(entry, SymbolEntry.TYPE, "type name expected");
       }
       else
@@ -503,7 +520,8 @@ public class Parser extends Object{
    /*
    assignmentStatement = <variable>name ":=" expression ";"
 
-   procedureCallStatement = <procedure>name [ actualParameterPart ] ";"
+   procedureCallStatement = <procedure>name ";"
+   
    */
    private void assignmentOrCallStatement(){
 	  
@@ -530,7 +548,7 @@ public class Parser extends Object{
    }
 
    /*
-   expression = relation { "and" relation } | { "or" relation }
+   expression = relation [{ "and" relation } | {"or" relation}]
    */
    private void expression(){
 	  	  
