@@ -315,7 +315,7 @@ public class Parser extends Object{
    private void enumerationTypeDefinition(){
       accept(Token.L_PAR, "'(' expected");
       SymbolEntry list = identifierList();
-      list.setRole(SymbolEntry.VAR);
+      list.setRole(SymbolEntry.CONST);
       accept(Token.R_PAR, "')' expected");
    }
 
@@ -509,9 +509,9 @@ public class Parser extends Object{
 	  
       SymbolEntry entry = name();
       if (token.code == Token.GETS){
-		 if(entry.role!=SymbolEntry.VAR&&entry.role!=SymbolEntry.PARAM){
-			acceptRole(entry,SymbolEntry.NONE,"must be a variable or parameter name: "+token.code+" "+entry.role);
-         }
+		 Set<Integer> temp = new HashSet<Integer>();
+		 temp.addAll(Arrays.asList(SymbolEntry.VAR,SymbolEntry.PARAM));
+		 acceptRole(entry,temp,"must be a variable or parameter name: "+token.code+" "+entry.role);
 		 token = scanner.nextToken();
          expression();
       }else{
@@ -639,9 +639,10 @@ public class Parser extends Object{
 			break;
          case Token.ID:
             SymbolEntry entry = name();
-			if(entry.role!=SymbolEntry.VAR&&entry.role!=SymbolEntry.PARAM&&entry.role!=SymbolEntry.CONST){
-				acceptRole(entry,SymbolEntry.NONE,"must be a variable,constant,or parameter name");
-			}
+			Set<Integer> temp = new HashSet<Integer>();
+			temp.addAll(Arrays.asList(SymbolEntry.VAR,SymbolEntry.PARAM,SymbolEntry.CONST));
+			acceptRole(entry,temp,"must be a variable,constant,or parameter name");
+
             break;
          case Token.L_PAR:
             token = scanner.nextToken();
