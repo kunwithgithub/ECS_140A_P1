@@ -16,6 +16,10 @@ public class SymbolEntry extends Object{
       role = NONE;
       next = null;
    }
+   
+   public String getName(){
+      return name;
+   }
 
    public String toString(){
       return "Name: " + name + "\n" + "Role: " + roleToString();
@@ -30,8 +34,11 @@ public class SymbolEntry extends Object{
    public void append(SymbolEntry entry){
       if (next == null)
          next = entry;
-      else
-         next.append(entry);
+      else{
+        // next.append(entry);
+         SymbolEntry newOne = new SymbolEntry(getName());
+         next = newOne;
+      }
    }  
 
    private String roleToString(){
