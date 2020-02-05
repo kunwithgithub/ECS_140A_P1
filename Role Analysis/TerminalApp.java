@@ -6,11 +6,25 @@ public class TerminalApp{
    private Chario chario;
    private Scanner scanner;
    private Parser parser;
+   private String filename;
+   private boolean include_r=false;//for role analysis
+   private boolean include_s=false;//for scope analysis
+   private boolean include_t=false;//for basic analysis
 
-   public TerminalApp(){
+   public TerminalApp(String args[]){
       java.util.Scanner reader = new java.util.Scanner(System.in);
-      System.out.print("Enter the input file name: ");
-      String filename = reader.nextLine();
+      this.filename = args[0];//first argument will be the filename
+	  
+	  for(int i=1;i<args.length;i++){//a forloop to fetch arguments from user input command
+		  if(args[i]=="-r"){
+			  this.include_r=true;
+		  }else if(args[i]=="-s"){
+			  this.include_s=true;
+		  }else if(args[i]=="-t"){
+			  this.include_t=true;
+		  }
+	  }
+	  
       FileInputStream stream;
       try{
          stream = new FileInputStream(filename);
@@ -51,6 +65,6 @@ public class TerminalApp{
    }
 
    public static void main(String args[]){
-      new TerminalApp();
+      new TerminalApp(args);
    }
 }

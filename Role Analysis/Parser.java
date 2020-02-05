@@ -8,6 +8,9 @@ public class Parser extends Object{
    private Scanner scanner;
    private Token token;
    private SymbolTable table;
+   private boolean include_r;
+   private boolean include_s;
+   private boolean include_t;
 
    private Set<Integer> addingOperator,
                         multiplyingOperator,
@@ -17,8 +20,11 @@ public class Parser extends Object{
                         leftNames,                        // Sets of roles for names (see below)
                         rightNames;
 
-   public Parser(Chario c, Scanner s){
-      chario = c;
+   public Parser(Chario c, Scanner s,boolean include_r,boolean include_s,boolean include_t){
+      this.include_r = include_r;
+	  this.include_s = include_s;
+	  this.include_t = include_t;
+	  chario = c;
       scanner = s;
       initHandles();
       initTable();
