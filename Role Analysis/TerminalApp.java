@@ -65,6 +65,11 @@ public class TerminalApp{
    }
 
    public static void main(String args[]){
-      new TerminalApp(args);
+	  String usage_message = "options are zero or more of:\n \t -s scope analysis \n \t -r role analysis \n \t -t token debugging";
+      if(args.length>0){
+		new TerminalApp(args);
+	  }else{
+		  System.out.println(usage_message);
+	  }
    }
 }

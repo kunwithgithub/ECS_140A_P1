@@ -9,9 +9,9 @@ public class SymbolTable extends Object{
    private boolean include_s=false;
    private boolean include_t=false;
 
-   private static final SymbolEntry EMPTY_SYMBOL = new SymbolEntry("");
+   private static final SymbolEntry EMPTY_SYMBOL = new SymbolEntry("",false,false,false);
 
-   public SymbolTable(Chario c,include_r,include_s,include_t){
+   public SymbolTable(Chario c,boolean include_r,boolean include_s, boolean include_t){
 	  this.include_r = include_r;
 	  this.include_s = include_s;
 	  this.include_t = include_t;
@@ -38,11 +38,13 @@ public class SymbolTable extends Object{
    public SymbolEntry enterSymbol(String id){
       Map<String, SymbolEntry> table = stack.peek();
       if (table.containsKey(id)){
-         chario.putError("identifier already declared in this block");
+		 if(this.include_r||this.include_s){
+			chario.putError("identifier already declared in this block");
+		 }
          return EMPTY_SYMBOL;
       }
       else{
-         SymbolEntry s = new SymbolEntry(id);
+         SymbolEntry s = new SymbolEntry(id,this.include_r,this.include_s,this.include_t);
          table.put(id, s);
          return s;
       } 
@@ -55,15 +57,19 @@ public class SymbolTable extends Object{
          if (s != null)
              return s;
       }
-      chario.putError("undeclared identifier");
+	  if(this.include_r||this.include_s){
+		chario.putError("undeclared identifier");
+	  }
       return EMPTY_SYMBOL;
    }
          
    private void printTable(Map<String, SymbolEntry> table){
-      chario.println("\nLevel " + level);
-      chario.println("---------");
-      for (SymbolEntry s : table.values())
-         chario.println(s.toString());
+	  if(this.include_r||this.include_s){
+		chario.println("\nLevel " + level);
+		chario.println("---------");
+		for (SymbolEntry s : table.values())
+			chario.println(s.toString());
+	  }
    }
 
 }

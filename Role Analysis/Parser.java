@@ -100,7 +100,7 @@ public class Parser extends Object{
    */
 
    private void initTable(){
-      table = new SymbolTable(chario);
+      table = new SymbolTable(chario,this.include_r,this.include_s,this.include_t);
       table.enterScope();
       SymbolEntry entry = table.enterSymbol("BOOLEAN");
       entry.setRole(SymbolEntry.TYPE);
@@ -139,7 +139,6 @@ public class Parser extends Object{
    }
 
    public void parse(){
-	   	  
 
       subprogramBody();
       accept(Token.EOF, "extra symbols after logical end of program");

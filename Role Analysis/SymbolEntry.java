@@ -6,15 +6,21 @@ public class SymbolEntry extends Object{
    public static final int PROC = 3;
    public static final int TYPE = 4;
    public static final int VAR = 5;
+   private boolean include_r = false;
+   private boolean include_s = false;
+   private boolean include_t = false;
 
    private String name;
    public int role;
    public SymbolEntry next;
 
-   public SymbolEntry(String id){
+   public SymbolEntry(String id,boolean include_r,boolean include_s,boolean include_t){
       name = id;
       role = NONE;
       next = null;
+	  this.include_r = include_r;
+	  this.include_s = include_s;
+	  this.include_t = include_t;
    }
    
    public String getName(){
@@ -22,7 +28,12 @@ public class SymbolEntry extends Object{
    }
 
    public String toString(){
-      return "Name: " + name + "\n" + "Role: " + roleToString();
+	  if(this.include_r){
+		return "Name: " + name + "\n" + "Role: " + roleToString();
+	  }
+	
+	return "Name: " + name;  
+	  
    }
 
    public void setRole(int r){
@@ -36,7 +47,7 @@ public class SymbolEntry extends Object{
          next = entry;
       else{
         // next.append(entry);
-         SymbolEntry newOne = new SymbolEntry(getName());
+         SymbolEntry newOne = new SymbolEntry(getName(),this.include_r,this.include_s,this.include_t);
          next = newOne;
       }
    }  
