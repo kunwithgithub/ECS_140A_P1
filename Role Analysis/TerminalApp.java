@@ -14,13 +14,12 @@ public class TerminalApp{
    public TerminalApp(String args[]){
       java.util.Scanner reader = new java.util.Scanner(System.in);
       this.filename = args[0];//first argument will be the filename
-	  
 	  for(int i=1;i<args.length;i++){//a forloop to fetch arguments from user input command
-		  if(args[i]=="-r"){
+		  if(args[i].equals("-r")){
 			  this.include_r=true;
-		  }else if(args[i]=="-s"){
+		  }else if(args[i].equals("-s")){
 			  this.include_s=true;
-		  }else if(args[i]=="-t"){
+		  }else if(args[i].equals("-t")){
 			  this.include_t=true;
 		  }
 	  }

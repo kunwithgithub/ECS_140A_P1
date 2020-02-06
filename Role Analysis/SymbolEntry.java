@@ -14,13 +14,10 @@ public class SymbolEntry extends Object{
    public int role;
    public SymbolEntry next;
 
-   public SymbolEntry(String id,boolean include_r,boolean include_s,boolean include_t){
+   public SymbolEntry(String id){
       name = id;
       role = NONE;
       next = null;
-	  this.include_r = include_r;
-	  this.include_s = include_s;
-	  this.include_t = include_t;
    }
    
    public String getName(){
@@ -28,11 +25,7 @@ public class SymbolEntry extends Object{
    }
 
    public String toString(){
-	  if(this.include_r){
 		return "Name: " + name + "\n" + "Role: " + roleToString();
-	  }
-	
-	return "Name: " + name;  
 	  
    }
 
@@ -47,7 +40,7 @@ public class SymbolEntry extends Object{
          next = entry;
       else{
         // next.append(entry);
-         SymbolEntry newOne = new SymbolEntry(getName(),this.include_r,this.include_s,this.include_t);
+         SymbolEntry newOne = new SymbolEntry(getName());
          next = newOne;
       }
    }  

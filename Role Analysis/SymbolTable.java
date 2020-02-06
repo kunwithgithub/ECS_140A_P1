@@ -9,7 +9,7 @@ public class SymbolTable extends Object{
    private boolean include_s=false;
    private boolean include_t=false;
 
-   private static final SymbolEntry EMPTY_SYMBOL = new SymbolEntry("",false,false,false);
+   private static final SymbolEntry EMPTY_SYMBOL = new SymbolEntry("");
 
    public SymbolTable(Chario c,boolean include_r,boolean include_s, boolean include_t){
 	  this.include_r = include_r;
@@ -44,7 +44,7 @@ public class SymbolTable extends Object{
          return EMPTY_SYMBOL;
       }
       else{
-         SymbolEntry s = new SymbolEntry(id,this.include_r,this.include_s,this.include_t);
+         SymbolEntry s = new SymbolEntry(id);
          table.put(id, s);
          return s;
       } 
@@ -67,8 +67,14 @@ public class SymbolTable extends Object{
 	  if(this.include_r||this.include_s){
 		chario.println("\nLevel " + level);
 		chario.println("---------");
-		for (SymbolEntry s : table.values())
-			chario.println(s.toString());
+		if(this.include_r){
+			for (SymbolEntry s : table.values())
+				chario.println(s.toString());
+		}else if(this.include_s){
+			for (SymbolEntry s : table.values())
+				chario.println(s.getName());
+		}
+		
 	  }
    }
 
