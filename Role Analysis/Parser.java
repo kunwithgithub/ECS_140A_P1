@@ -356,7 +356,7 @@ public class Parser extends Object{
     	   index();
         }
        
-        accept(Token.R_PAR, "')' expected5");
+        accept(Token.R_PAR, "')' expected");
         accept(Token.OF, "'of' expected");
         SymbolEntry entry = name();
 		acceptRole(entry,SymbolEntry.TYPE,"type name expected");
@@ -470,7 +470,7 @@ public class Parser extends Object{
     	 
     	 accept(Token.END, "'end' expected");
     	 accept(Token.LOOP, "'loop' expected");
-    	 accept(Token.SEMI, "';' expected loopStatementOrIterationScheme");
+    	 accept(Token.SEMI, "';' expected");
      }
    /*
    ifStatement =
@@ -504,7 +504,7 @@ public class Parser extends Object{
     	 
     	 accept(Token.END, "'end' expected");
     	 accept(Token.IF, "'if' expected");
-    	 accept(Token.SEMI, "';' expected in ifstatement");
+    	 accept(Token.SEMI, "';' expected");
     	 
     	
      }
@@ -520,7 +520,7 @@ public class Parser extends Object{
     		 condition();
     	 }
     	 
-    	 accept(Token.SEMI, "';' expected exitStatement");
+    	 accept(Token.SEMI, "';' expected");
      }
    /*
    assignmentStatement = <variable>name ":=" expression ";"
@@ -534,7 +534,7 @@ public class Parser extends Object{
       if (token.code == Token.GETS){
 		 Set<Integer> temp = new HashSet<Integer>();
 		 temp.addAll(Arrays.asList(SymbolEntry.VAR,SymbolEntry.PARAM));
-		 acceptRole(entry,temp,"must be a variable or parameter name: "+token.code+" "+entry.role);
+		 acceptRole(entry,temp,"must be a variable or parameter name");
 		 token = scanner.nextToken();
          expression();
       }else{
@@ -647,7 +647,7 @@ public class Parser extends Object{
     	  
     	  else
     	  {
-    		  fatalError("error in factor2");
+    		  fatalError("error in factor");
     	  }
       }
    /*
@@ -702,6 +702,6 @@ public class Parser extends Object{
 		   expression();
 	   }
 	   
-	   accept(Token.R_PAR, "')' expected2 " + token.code);
+	   accept(Token.R_PAR, "')' expected");
    }
 }

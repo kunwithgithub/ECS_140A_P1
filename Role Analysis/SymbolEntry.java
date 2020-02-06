@@ -31,17 +31,18 @@ public class SymbolEntry extends Object{
 
    public void setRole(int r){
       role = r;
-      if (next != null)
+      if (next != null){
+		 //System.out.println();
          next.setRole(r);
+	  }
    }
 
    public void append(SymbolEntry entry){
-      if (next == null)
+      if (next == null){
          next = entry;
-      else{
-        // next.append(entry);
-         SymbolEntry newOne = new SymbolEntry(getName());
-         next = newOne;
+      }else{
+		  
+         next.append(entry);
       }
    }  
 
