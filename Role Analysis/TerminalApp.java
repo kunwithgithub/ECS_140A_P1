@@ -36,7 +36,7 @@ public class TerminalApp{
       //testChario();
       scanner = new Scanner(chario);
       //testScanner();
-      parser = new Parser(chario, scanner);
+      parser = new Parser(chario, scanner,this.include_r,this.include_s,this.include_t);
       testParser();
    }
 

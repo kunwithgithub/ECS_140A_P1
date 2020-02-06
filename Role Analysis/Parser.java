@@ -8,9 +8,9 @@ public class Parser extends Object{
    private Scanner scanner;
    private Token token;
    private SymbolTable table;
-   private boolean include_r;
-   private boolean include_s;
-   private boolean include_t;
+   private boolean include_r=false;
+   private boolean include_s=false;
+   private boolean include_t=false;
 
    private Set<Integer> addingOperator,
                         multiplyingOperator,

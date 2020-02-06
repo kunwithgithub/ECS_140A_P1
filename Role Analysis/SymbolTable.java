@@ -5,10 +5,16 @@ public class SymbolTable extends Object{
    private int level;
    private Stack<Map<String, SymbolEntry>> stack;
    private Chario chario;
+   private boolean include_r=false;
+   private boolean include_s=false;
+   private boolean include_t=false;
 
    private static final SymbolEntry EMPTY_SYMBOL = new SymbolEntry("");
 
-   public SymbolTable(Chario c){
+   public SymbolTable(Chario c,include_r,include_s,include_t){
+	  this.include_r = include_r;
+	  this.include_s = include_s;
+	  this.include_t = include_t;
       chario = c;
       reset();
    }
