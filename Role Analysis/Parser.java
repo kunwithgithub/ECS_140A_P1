@@ -121,7 +121,7 @@ public class Parser extends Object{
       if (token.code == Token.ID)
          entry = table.enterSymbol(token.string);
       else
-         fatalError("identifier expected");
+         fatalError("enterId: identifier expected");
       token = scanner.nextToken();
       return entry;
    }
@@ -133,7 +133,7 @@ public class Parser extends Object{
       if (token.code == Token.ID)
          entry = table.findSymbol(token.string);
       else
-         fatalError("identifier expected");
+         fatalError("findId: identifier expected");
       token = scanner.nextToken();
       return entry;
    }
